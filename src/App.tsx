@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Hero } from "./components/Hero";
 import { Features } from "./components/Features";
 import { AdGenerator } from "./components/AdGenerator";
+import { Footer } from "./components/Footer";
 import { Toaster } from "./components/ui/sonner";
 import LightRays from "./components/LightRays";
 import { UploadPage } from "./components/UploadPage";
@@ -53,6 +54,7 @@ export default function App() {
         <div className="relative z-10">
           <Toaster />
           <UploadPage onBack={handleBackToHome} onUploadComplete={handleUploadComplete} />
+          <Footer />
         </div>
       </div>
     );
@@ -82,6 +84,7 @@ export default function App() {
         <Hero onTryNow={handleGoToUpload} />
         <Features onGoToStudio={handleGoToUpload} onCreateCampaign={handleCreateCampaign} />
         <AdGenerator onTryNow={handleGoToUpload} />
+        <Footer />
       </div>
     </div>
   );

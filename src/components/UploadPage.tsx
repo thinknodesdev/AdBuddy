@@ -651,107 +651,106 @@ export function UploadPage({ onBack, onUploadComplete }: UploadPageProps) {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-20"
-        >
-          <div className="max-w-3xl mx-auto px-4 py-12">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+        {/* Navigation Bar */}
+        <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex items-center gap-4">
                 <Button
                   variant="ghost"
-                  size="sm"
                   onClick={onBack}
-                  className="flex items-center gap-1 text-sm"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
                 >
-                  <BackArrow className="w-3 h-3" />
+                  <BackArrow className="w-4 h-4" />
                   Back to Home
                 </Button>
-                <div className="h-4 w-px bg-gray-300" />
-                <div>
-                  <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Try AdBuddy Now
-                  </h1>
-                  <p className="text-xs text-gray-600">Experience the power of AI-driven ad creation</p>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <div className="text-sm text-gray-500">
+                  Step {currentStep} of {STEPS.length}
+                </div>
+                <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-blue-500 transition-all duration-300"
+                    style={{ width: `${(currentStep / STEPS.length) * 100}%` }}
+                  />
                 </div>
               </div>
-              <Badge variant="secondary" className="flex items-center gap-1 text-xs">
-                <Sparkles className="w-3 h-3" />
-                AI-Powered
-              </Badge>
             </div>
           </div>
-        </motion.div>
+        </nav>
 
         {/* Main Content */}
         <div className="max-w-3xl mx-auto px-4 py-16">
-          {/* Progress Steps */}
+          {/* Combined Progress and Content Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
+            className="mb-32 mt-8"
           >
-            <div className="flex items-center justify-between mb-12">
-              {STEPS.map((step, index) => {
-                const Icon = step.icon;
-                const isActive = currentStep === step.id;
-                const isCompleted = currentStep > step.id;
-                
-                return (
-                  <div key={step.id} className="flex flex-col items-center">
-                    <motion.div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-lg shadow-blue-500/25"
-                          : isCompleted
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-200 text-gray-500"
-                      }`}
-                      animate={isActive ? { scale: [1, 1.1, 1] } : {}}
-                      transition={{ duration: 0.5, repeat: isActive ? Infinity : 0 }}
-                    >
-                      {isCompleted ? (
-                        <CheckCircle className="w-4 h-4" />
-                      ) : (
-                        <Icon className="w-4 h-4" />
+            <Card className="p-8 bg-white/60 backdrop-blur-sm border border-gray-200/50">
+              {/* Progress Steps */}
+              <div className="flex items-center justify-between mb-16">
+                {STEPS.map((step, index) => {
+                  const Icon = step.icon;
+                  const isActive = currentStep === step.id;
+                  const isCompleted = currentStep > step.id;
+                  
+                  return (
+                    <div key={step.id} className="flex flex-col items-center">
+                      <motion.div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                          isActive
+                            ? "bg-blue-500 text-white shadow-lg shadow-blue-500/25"
+                            : isCompleted
+                            ? "bg-green-500 text-white"
+                            : "bg-gray-200 text-gray-500"
+                        }`}
+                        animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+                        transition={{ duration: 0.5, repeat: isActive ? Infinity : 0 }}
+                      >
+                        {isCompleted ? (
+                          <CheckCircle className="w-4 h-4" />
+                        ) : (
+                          <Icon className="w-4 h-4" />
+                        )}
+                      </motion.div>
+                      <div className="mt-4 text-center">
+                        <p className={`text-lg font-medium ${
+                          isActive ? "text-blue-600" : isCompleted ? "text-green-600" : "text-gray-500"
+                        }`}>
+                          {step.title}
+                        </p>
+                        <p className="text-sm text-gray-400 mt-2">
+                          {step.description}
+                        </p>
+                      </div>
+                      {index < STEPS.length - 1 && (
+                        <div className={`w-10 h-0.5 mt-20 ${
+                          isCompleted ? "bg-green-500" : "bg-gray-200"
+                        }`} />
                       )}
-                    </motion.div>
-                    <div className="mt-4 text-center">
-                      <p className={`text-lg font-medium ${
-                        isActive ? "text-blue-600" : isCompleted ? "text-green-600" : "text-gray-500"
-                      }`}>
-                        {step.title}
-                      </p>
-                      <p className="text-sm text-gray-400 mt-2">
-                        {step.description}
-                      </p>
                     </div>
-                    {index < STEPS.length - 1 && (
-                      <div className={`w-10 h-0.5 mt-6 ${
-                        isCompleted ? "bg-green-500" : "bg-gray-200"
-                      }`} />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            <Progress value={(currentStep / STEPS.length) * 100} className="w-full h-1" />
+                  );
+                })}
+              </div>
+              <Progress value={(currentStep / STEPS.length) * 100} className="w-full h-1 mb-16" />
+              
+              {/* Step Content */}
+              <div className="bg-white/80 rounded-lg p-8 border border-gray-200/30">
+                <AnimatePresence mode="wait">
+                  {renderStepContent()}
+                </AnimatePresence>
+              </div>
+            </Card>
           </motion.div>
-
-          {/* Step Content */}
-          <Card className="p-12 mb-16">
-            <AnimatePresence mode="wait">
-              {renderStepContent()}
-            </AnimatePresence>
-          </Card>
 
           {/* Navigation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex justify-between items-center"
+            className="flex justify-between items-center mt-48 pb-96"
           >
             <Button
               variant="outline"
@@ -762,7 +761,7 @@ export function UploadPage({ onBack, onUploadComplete }: UploadPageProps) {
               Clear All
             </Button>
 
-            <div className="flex gap-3">
+            <div className="flex gap-6 ml-8">
               {currentStep > 1 && (
                 <Button
                   variant="outline"
@@ -783,12 +782,12 @@ export function UploadPage({ onBack, onUploadComplete }: UploadPageProps) {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               ) : (
-                       <Button
-                         size="lg"
-                         className="bg-blue hover:bg-blue/90 text-blue-foreground px-8"
-                         onClick={handleSubmit}
-                         disabled={isValidating || !productData.campaignName.trim()}
-                       >
+                <Button
+                  size="lg"
+                  className="bg-blue hover:bg-blue/90 text-blue-foreground px-8"
+                  onClick={handleSubmit}
+                  disabled={isValidating || !productData.campaignName.trim()}
+                >
                   {isValidating ? (
                     <motion.div
                       className="flex items-center gap-2"

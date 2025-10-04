@@ -1,7 +1,7 @@
 
-  # AdBudd Video Ad Generator
+  # AdBuddy Video Ad Generator
 
-  This is a code bundle for AdBudd Video Ad Generator. The original project is available at https://www.figma.com/design/IeCC4wryD5JxwoaKXHcJNv/AdBudd-Video-Ad-Generator.
+  This is a code bundle for AdBuddy Video Ad Generator. The original project is available at https://www.figma.com/design/IeCC4wryD5JxwoaKXHcJNv/AdBuddy-Video-Ad-Generator.
 
   ## Running the code
 
