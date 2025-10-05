@@ -8,6 +8,7 @@ interface Ad {
     title: string;
     description?: string;
     imageUrl?: string;
+    videoUrl?: string;
     advertiser: string;
     engagement: number;
     impressions: number;
@@ -29,6 +30,10 @@ export function AdsLibrary({ onBack }: AdsLibraryProps) {
     const [activePlatform, setActivePlatform] = useState('all');
     const [ads, setAds] = useState<Ad[]>([]);
     const [loading, setLoading] = useState(false);
+
+    // MODAL STATE - NEW
+    const [selectedAd, setSelectedAd] = useState<Ad | null>(null);
+    const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
 
     // FILTER STATE
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
@@ -99,23 +104,24 @@ export function AdsLibrary({ onBack }: AdsLibraryProps) {
         }
     };
 
+    // NEW - Handle ad card click
+    const handleAdClick = (ad: Ad) => {
+        setSelectedAd(ad);
+        setShowAnalyticsModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowAnalyticsModal(false);
+        setSelectedAd(null);
+    };
+
     // WORKING FILTER LOGIC
     const filteredAds = ads.filter(ad => {
-        // Platform filter
         if (activePlatform !== 'all' && ad.platform !== activePlatform) return false;
-
-        // Country filter
         if (selectedCountries.length > 0 && !selectedCountries.includes(ad.country || '')) return false;
-
-        // Language filter
         if (selectedLanguages.length > 0 && !selectedLanguages.includes(ad.language || '')) return false;
-
-        // CTA filter
         if (selectedCTAs.length > 0 && !selectedCTAs.includes(ad.ctaType || '')) return false;
-
-        // Status filter
         if (selectedStatus !== 'all' && ad.status !== selectedStatus) return false;
-
         return true;
     });
 
@@ -225,7 +231,7 @@ export function AdsLibrary({ onBack }: AdsLibraryProps) {
                             <Brain className="w-5 h-5 text-purple-600" />
                             <div className="flex flex-col">
                                 <span className="text-xs font-semibold text-purple-900">Powered by 12 Labs</span>
-                                <span className="text-xs text-purple-600">AI Analytics Active</span>
+                                <span className="text-xs text-purple-600">Click any ad for AI insights</span>
                             </div>
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                         </div>
@@ -297,12 +303,22 @@ export function AdsLibrary({ onBack }: AdsLibraryProps) {
                     ) : (
                         <div className="grid grid-cols-3 gap-6">
                             {filteredAds.map(ad => (
-                                <AdCard key={ad.id} ad={ad} />
+                                <AdCard key={ad.id} ad={ad} onClick={() => handleAdClick(ad)} />
                             ))}
                         </div>
                     )}
                 </div>
             </main>
+
+            {/* VIDEO ANALYTICS MODAL - NEW */}
+            {showAnalyticsModal && selectedAd && (
+                <VideoAnalyticsModal
+                    videoUrl={selectedAd.videoUrl || ''}
+                    videoTitle={selectedAd.title}
+                    videoId={selectedAd.id}
+                    onClose={handleCloseModal}
+                />
+            )}
         </div>
     );
 }
@@ -324,7 +340,7 @@ function FilterSection({ title, children }: { title: string; children: React.Rea
     );
 }
 
-function AdCard({ ad }: { ad: Ad }) {
+function AdCard({ ad, onClick }: { ad: Ad; onClick: () => void }) {
     const platformColors: Record<string, string> = {
         facebook: 'bg-blue-600',
         meta: 'bg-blue-500',
@@ -335,7 +351,19 @@ function AdCard({ ad }: { ad: Ad }) {
     };
 
     return (
-        <div className="bg-white rounded-xl border hover:shadow-xl transition-all cursor-pointer group">
+        <div
+            onClick={onClick}
+            className="bg-white rounded-xl border hover:shadow-xl transition-all cursor-pointer group relative"
+        >
+            {/* AI Analysis Overlay on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-600/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center z-10 pointer-events-none">
+                <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                    <Brain className="w-12 h-12 mx-auto mb-2" />
+                    <p className="font-bold text-lg">Analyze with AI</p>
+                    <p className="text-sm opacity-90">Powered by 12 Labs</p>
+                </div>
+            </div>
+
             {/* Header */}
             <div className="px-4 py-3 border-b flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">
