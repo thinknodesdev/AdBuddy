@@ -1,7 +1,14 @@
 {
-      "name": "AdBuddy Video Ad Generator",
+      "name": "adbuddy-video-ad-generator",
       "version": "0.1.0",
       "private": true,
+      "type": "module",
+      "scripts": {
+            "dev": "vite",
+            "build": "tsc && vite build",
+            "preview": "vite preview",
+            "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+      },
       "dependencies": {
             "@radix-ui/react-accordion": "^1.2.3",
             "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -30,13 +37,13 @@
             "@radix-ui/react-toggle-group": "^1.1.2",
             "@radix-ui/react-tooltip": "^1.1.8",
             "class-variance-authority": "^0.7.1",
-            "clsx": "*",
+            "clsx": "^2.1.1",
             "cmdk": "^1.1.1",
             "embla-carousel-react": "^8.6.0",
             "input-otp": "^1.4.2",
             "lottie-react": "^2.4.1",
             "lucide-react": "^0.487.0",
-            "motion": "*",
+            "motion": "^11.15.0",
             "next-themes": "^0.4.6",
             "ogl": "^1.0.11",
             "react": "^18.3.1",
@@ -46,16 +53,23 @@
             "react-resizable-panels": "^2.1.7",
             "recharts": "^2.15.2",
             "sonner": "^2.0.3",
-            "tailwind-merge": "*",
+            "tailwind-merge": "^2.5.5",
             "vaul": "^1.1.2"
       },
       "devDependencies": {
             "@types/node": "^20.10.0",
+            "@types/react": "^18.3.12",
+            "@types/react-dom": "^18.3.1",
+            "@typescript-eslint/eslint-plugin": "^6.21.0",
+            "@typescript-eslint/parser": "^6.21.0",
             "@vitejs/plugin-react-swc": "^3.10.2",
+            "autoprefixer": "^10.4.20",
+            "eslint": "^8.57.1",
+            "eslint-plugin-react-hooks": "^4.6.2",
+            "eslint-plugin-react-refresh": "^0.4.14",
+            "postcss": "^8.4.49",
+            "tailwindcss": "^3.4.17",
+            "typescript": "^5.7.2",
             "vite": "^4.5.14"
-      },
-      "scripts": {
-            "dev": "vite",
-            "build": "vite build"
       }
 }

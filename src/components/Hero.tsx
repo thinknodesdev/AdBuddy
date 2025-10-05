@@ -2,8 +2,8 @@ import React from "react";
 import { motion } from "motion/react";
 import { Sparkles, Zap } from "lucide-react";
 import { Button } from "./ui/button";
-import Lottie from "lottie-react";
-import adbudAnimation from "../../public/images/adbud1.json";
+// import Lottie from "lottie-react";
+// import adbudAnimation from "/images/adbud1.json?url";
 
 interface HeroProps {
   onTryNow?: () => void;
@@ -29,20 +29,15 @@ export function Hero({ onTryNow }: HeroProps) {
             <span className="text-sm text-blue-900">AI-Powered Ad Creation</span>
           </motion.div>
 
-          {/* Lottie Animation */}
+          {/* Placeholder for Lottie Animation */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.1 }}
             className="mb-8"
           >
-            <div className="w-80 h-80 lg:w-96 lg:h-96">
-              <Lottie
-                animationData={adbudAnimation}
-                loop={true}
-                autoplay={true}
-                style={{ width: "100%", height: "100%" }}
-              />
+            <div className="w-80 h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+              <Sparkles className="w-32 h-32 text-blue-500" />
             </div>
           </motion.div>
 
@@ -52,9 +47,9 @@ export function Hero({ onTryNow }: HeroProps) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mb-6"
           >
-            <span 
-              className="block font-bold tracking-tight text-gray-900" 
-              style={{ 
+            <span
+              className="block font-bold tracking-tight text-gray-900"
+              style={{
                 fontFamily: 'Gravitas One, cursive',
                 fontSize: 'clamp(1.75rem, 3.5vw, 4rem)',
                 lineHeight: '0.9'
@@ -62,9 +57,9 @@ export function Hero({ onTryNow }: HeroProps) {
             >
               Generate Stunning Video Ads
             </span>
-            <span 
-              className="block font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" 
-              style={{ 
+            <span
+              className="block font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              style={{
                 fontFamily: 'Gravitas One, cursive',
                 fontSize: 'clamp(1.75rem, 3.5vw, 4rem)',
                 lineHeight: '0.9'
